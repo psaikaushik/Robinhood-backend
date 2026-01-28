@@ -1,0 +1,169 @@
+{
+  "stocks": [
+    {
+      "symbol": "AAPL",
+      "name": "Apple Inc.",
+      "current_price": 178.50,
+      "previous_close": 176.25,
+      "day_high": 180.00,
+      "day_low": 175.50,
+      "volume": 45000000,
+      "market_cap": 2800000000000,
+      "sector": "Technology"
+    },
+    {
+      "symbol": "GOOGL",
+      "name": "Alphabet Inc.",
+      "current_price": 141.25,
+      "previous_close": 139.80,
+      "day_high": 143.00,
+      "day_low": 138.50,
+      "volume": 22000000,
+      "market_cap": 1750000000000,
+      "sector": "Technology"
+    },
+    {
+      "symbol": "MSFT",
+      "name": "Microsoft Corporation",
+      "current_price": 378.90,
+      "previous_close": 375.00,
+      "day_high": 382.00,
+      "day_low": 374.00,
+      "volume": 18000000,
+      "market_cap": 2810000000000,
+      "sector": "Technology"
+    },
+    {
+      "symbol": "AMZN",
+      "name": "Amazon.com Inc.",
+      "current_price": 178.75,
+      "previous_close": 180.00,
+      "day_high": 181.50,
+      "day_low": 176.00,
+      "volume": 35000000,
+      "market_cap": 1850000000000,
+      "sector": "Consumer Cyclical"
+    },
+    {
+      "symbol": "TSLA",
+      "name": "Tesla Inc.",
+      "current_price": 248.50,
+      "previous_close": 252.00,
+      "day_high": 255.00,
+      "day_low": 245.00,
+      "volume": 80000000,
+      "market_cap": 790000000000,
+      "sector": "Automotive"
+    },
+    {
+      "symbol": "META",
+      "name": "Meta Platforms Inc.",
+      "current_price": 505.25,
+      "previous_close": 500.00,
+      "day_high": 510.00,
+      "day_low": 498.00,
+      "volume": 15000000,
+      "market_cap": 1300000000000,
+      "sector": "Technology"
+    },
+    {
+      "symbol": "NVDA",
+      "name": "NVIDIA Corporation",
+      "current_price": 875.30,
+      "previous_close": 860.00,
+      "day_high": 890.00,
+      "day_low": 855.00,
+      "volume": 40000000,
+      "market_cap": 2160000000000,
+      "sector": "Technology"
+    },
+    {
+      "symbol": "JPM",
+      "name": "JPMorgan Chase & Co.",
+      "current_price": 198.45,
+      "previous_close": 196.00,
+      "day_high": 200.00,
+      "day_low": 195.00,
+      "volume": 8000000,
+      "market_cap": 570000000000,
+      "sector": "Financial Services"
+    },
+    {
+      "symbol": "V",
+      "name": "Visa Inc.",
+      "current_price": 279.80,
+      "previous_close": 278.00,
+      "day_high": 282.00,
+      "day_low": 276.50,
+      "volume": 6000000,
+      "market_cap": 575000000000,
+      "sector": "Financial Services"
+    },
+    {
+      "symbol": "JNJ",
+      "name": "Johnson & Johnson",
+      "current_price": 156.30,
+      "previous_close": 157.50,
+      "day_high": 158.00,
+      "day_low": 155.00,
+      "volume": 5000000,
+      "market_cap": 375000000000,
+      "sector": "Healthcare"
+    },
+    {
+      "symbol": "WMT",
+      "name": "Walmart Inc.",
+      "current_price": 165.20,
+      "previous_close": 164.00,
+      "day_high": 166.50,
+      "day_low": 163.00,
+      "volume": 7000000,
+      "market_cap": 445000000000,
+      "sector": "Consumer Defensive"
+    },
+    {
+      "symbol": "PG",
+      "name": "Procter & Gamble Co.",
+      "current_price": 158.75,
+      "previous_close": 159.00,
+      "day_high": 160.00,
+      "day_low": 157.50,
+      "volume": 4500000,
+      "market_cap": 375000000000,
+      "sector": "Consumer Defensive"
+    },
+    {
+      "symbol": "DIS",
+      "name": "The Walt Disney Company",
+      "current_price": 112.40,
+      "previous_close": 110.00,
+      "day_high": 114.00,
+      "day_low": 109.50,
+      "volume": 12000000,
+      "market_cap": 205000000000,
+      "sector": "Communication Services"
+    },
+    {
+      "symbol": "NFLX",
+      "name": "Netflix Inc.",
+      "current_price": 628.50,
+      "previous_close": 620.00,
+      "day_high": 635.00,
+      "day_low": 615.00,
+      "volume": 5500000,
+      "market_cap": 275000000000,
+      "sector": "Communication Services"
+    },
+    {
+      "symbol": "AMD",
+      "name": "Advanced Micro Devices",
+      "current_price": 178.90,
+      "previous_close": 175.00,
+      "day_high": 182.00,
+      "day_low": 173.50,
+      "volume": 50000000,
+      "market_cap": 290000000000,
+      "sector": "Technology"
+    }
+  ]
+}

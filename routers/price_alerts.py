@@ -1,0 +1,132 @@
+"""
+Price Alerts Router
+
+CANDIDATE TASK: Implement the API endpoints for price alerts.
+
+Endpoints to implement:
+- POST /alerts - Create a new price alert
+- GET /alerts - Get all alerts for current user (with optional active_only filter)
+- GET /alerts/{alert_id} - Get a specific alert
+- DELETE /alerts/{alert_id} - Delete an alert
+- POST /alerts/check - Check and trigger any alerts that meet conditions
+
+See tests/test_price_alerts.py for expected behavior.
+"""
+
+from typing import List, Optional
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
+
+from database import get_db
+from schemas.price_alert import PriceAlertCreate, PriceAlertResponse
+from services.price_alerts import PriceAlertService
+from services.market import MarketService
+from services.auth import get_current_user
+from models.user import User
+
+router = APIRouter(prefix="/alerts", tags=["Price Alerts"])
+
+
+# CANDIDATE TODO: Implement all endpoints below
+
+
+@router.post("", response_model=PriceAlertResponse, status_code=status.HTTP_201_CREATED)
+def create_alert(
+    alert: PriceAlertCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Create a new price alert.
+
+    - **symbol**: Stock ticker symbol (e.g., "AAPL")
+    - **target_price**: The price that triggers the alert
+    - **condition**: "above" or "below"
+
+    CANDIDATE TODO: Implement this endpoint
+    """
+    # TODO: Implement this endpoint
+    # Hint: Use PriceAlertService.create_alert()
+    # Don't forget to include current_price in the response
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED,
+        detail="Candidate must implement this endpoint"
+    )
+
+
+@router.get("", response_model=List[PriceAlertResponse])
+def get_alerts(
+    active_only: bool = False,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Get all price alerts for the current user.
+
+    - **active_only**: If true, only return non-triggered active alerts
+
+    CANDIDATE TODO: Implement this endpoint
+    """
+    # TODO: Implement this endpoint
+    # Hint: Use PriceAlertService.get_alerts()
+    # Don't forget to include current_price for each alert
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED,
+        detail="Candidate must implement this endpoint"
+    )
+
+
+@router.get("/{alert_id}", response_model=PriceAlertResponse)
+def get_alert(
+    alert_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Get a specific price alert by ID.
+
+    CANDIDATE TODO: Implement this endpoint
+    """
+    # TODO: Implement this endpoint
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED,
+        detail="Candidate must implement this endpoint"
+    )
+
+
+@router.delete("/{alert_id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_alert(
+    alert_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Delete a price alert.
+
+    CANDIDATE TODO: Implement this endpoint
+    """
+    # TODO: Implement this endpoint
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED,
+        detail="Candidate must implement this endpoint"
+    )
+
+
+@router.post("/check", response_model=List[PriceAlertResponse])
+def check_alerts(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Check all active alerts and trigger any that meet their conditions.
+
+    Returns the list of alerts that were triggered.
+
+    CANDIDATE TODO: Implement this endpoint
+    """
+    # TODO: Implement this endpoint
+    # Hint: Use PriceAlertService.check_and_trigger_alerts()
+    raise HTTPException(
+        status_code=status.HTTP_501_NOT_IMPLEMENTED,
+        detail="Candidate must implement this endpoint"
+    )

@@ -4,44 +4,29 @@ from typing import List, Optional
 from sqlalchemy.orm import Session
 
 from models.stock import Stock
-
-# Simulated stock data - predefined stocks
-MOCK_STOCKS = [
-    {"symbol": "AAPL", "name": "Apple Inc.", "price": 178.50, "sector": "Technology", "market_cap": 2800000000000},
-    {"symbol": "GOOGL", "name": "Alphabet Inc.", "price": 141.25, "sector": "Technology", "market_cap": 1750000000000},
-    {"symbol": "MSFT", "name": "Microsoft Corporation", "price": 378.90, "sector": "Technology", "market_cap": 2810000000000},
-    {"symbol": "AMZN", "name": "Amazon.com Inc.", "price": 178.75, "sector": "Consumer Cyclical", "market_cap": 1850000000000},
-    {"symbol": "TSLA", "name": "Tesla Inc.", "price": 248.50, "sector": "Automotive", "market_cap": 790000000000},
-    {"symbol": "META", "name": "Meta Platforms Inc.", "price": 505.25, "sector": "Technology", "market_cap": 1300000000000},
-    {"symbol": "NVDA", "name": "NVIDIA Corporation", "price": 875.30, "sector": "Technology", "market_cap": 2160000000000},
-    {"symbol": "JPM", "name": "JPMorgan Chase & Co.", "price": 198.45, "sector": "Financial Services", "market_cap": 570000000000},
-    {"symbol": "V", "name": "Visa Inc.", "price": 279.80, "sector": "Financial Services", "market_cap": 575000000000},
-    {"symbol": "JNJ", "name": "Johnson & Johnson", "price": 156.30, "sector": "Healthcare", "market_cap": 375000000000},
-    {"symbol": "WMT", "name": "Walmart Inc.", "price": 165.20, "sector": "Consumer Defensive", "market_cap": 445000000000},
-    {"symbol": "PG", "name": "Procter & Gamble Co.", "price": 158.75, "sector": "Consumer Defensive", "market_cap": 375000000000},
-    {"symbol": "DIS", "name": "The Walt Disney Company", "price": 112.40, "sector": "Communication Services", "market_cap": 205000000000},
-    {"symbol": "NFLX", "name": "Netflix Inc.", "price": 628.50, "sector": "Communication Services", "market_cap": 275000000000},
-    {"symbol": "AMD", "name": "Advanced Micro Devices", "price": 178.90, "sector": "Technology", "market_cap": 290000000000},
-]
+from services.data_loader import get_data_loader
 
 
 class MarketService:
     @staticmethod
     def initialize_stocks(db: Session) -> None:
-        """Initialize the database with mock stock data."""
-        for stock_data in MOCK_STOCKS:
+        """Initialize the database with stock data from JSON file."""
+        loader = get_data_loader()
+        stocks_data = loader.get_stocks()
+
+        for stock_data in stocks_data:
             existing = db.query(Stock).filter(Stock.symbol == stock_data["symbol"]).first()
             if not existing:
                 stock = Stock(
                     symbol=stock_data["symbol"],
                     name=stock_data["name"],
-                    current_price=stock_data["price"],
-                    previous_close=stock_data["price"],
-                    day_high=stock_data["price"],
-                    day_low=stock_data["price"],
-                    volume=random.randint(1000000, 50000000),
-                    market_cap=stock_data["market_cap"],
-                    sector=stock_data["sector"]
+                    current_price=stock_data["current_price"],
+                    previous_close=stock_data.get("previous_close", stock_data["current_price"]),
+                    day_high=stock_data.get("day_high", stock_data["current_price"]),
+                    day_low=stock_data.get("day_low", stock_data["current_price"]),
+                    volume=stock_data.get("volume", random.randint(1000000, 50000000)),
+                    market_cap=stock_data.get("market_cap"),
+                    sector=stock_data.get("sector")
                 )
                 db.add(stock)
         db.commit()

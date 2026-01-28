@@ -1,0 +1,82 @@
+{
+  "orders": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "symbol": "AAPL",
+      "order_type": "market",
+      "side": "buy",
+      "quantity": 10,
+      "limit_price": null,
+      "filled_quantity": 10,
+      "filled_price": 150.00,
+      "status": "filled",
+      "created_at": "2024-01-15T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "symbol": "GOOGL",
+      "order_type": "limit",
+      "side": "buy",
+      "quantity": 5,
+      "limit_price": 135.00,
+      "filled_quantity": 5,
+      "filled_price": 130.00,
+      "status": "filled",
+      "created_at": "2024-01-16T14:20:00Z"
+    },
+    {
+      "id": 3,
+      "user_id": 2,
+      "symbol": "MSFT",
+      "order_type": "market",
+      "side": "buy",
+      "quantity": 20,
+      "limit_price": null,
+      "filled_quantity": 20,
+      "filled_price": 350.00,
+      "status": "filled",
+      "created_at": "2024-01-17T09:15:00Z"
+    },
+    {
+      "id": 4,
+      "user_id": 3,
+      "symbol": "TSLA",
+      "order_type": "limit",
+      "side": "buy",
+      "quantity": 10,
+      "limit_price": 240.00,
+      "filled_quantity": 0,
+      "filled_price": null,
+      "status": "pending",
+      "created_at": "2024-01-20T11:00:00Z"
+    },
+    {
+      "id": 5,
+      "user_id": 4,
+      "symbol": "AAPL",
+      "order_type": "limit",
+      "side": "sell",
+      "quantity": 5,
+      "limit_price": 185.00,
+      "filled_quantity": 0,
+      "filled_price": null,
+      "status": "pending",
+      "created_at": "2024-01-20T13:45:00Z"
+    },
+    {
+      "id": 6,
+      "user_id": 1,
+      "symbol": "NVDA",
+      "order_type": "market",
+      "side": "buy",
+      "quantity": 3,
+      "limit_price": null,
+      "filled_quantity": 0,
+      "filled_price": null,
+      "status": "cancelled",
+      "created_at": "2024-01-18T16:00:00Z"
+    }
+  ]
+}

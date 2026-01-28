@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "john.doe@example.com",
+      "username": "johndoe",
+      "password": "password123",
+      "full_name": "John Doe",
+      "balance": 10000.00
+    },
+    {
+      "id": 2,
+      "email": "jane.smith@example.com",
+      "username": "janesmith",
+      "password": "password123",
+      "full_name": "Jane Smith",
+      "balance": 25000.00
+    },
+    {
+      "id": 3,
+      "email": "bob.wilson@example.com",
+      "username": "bobwilson",
+      "password": "password123",
+      "full_name": "Bob Wilson",
+      "balance": 5000.00
+    },
+    {
+      "id": 4,
+      "email": "alice.jones@example.com",
+      "username": "alicejones",
+      "password": "password123",
+      "full_name": "Alice Jones",
+      "balance": 50000.00
+    },
+    {
+      "id": 5,
+      "email": "test.user@example.com",
+      "username": "testuser",
+      "password": "testpass",
+      "full_name": "Test User",
+      "balance": 100000.00
+    }
+  ]
+}

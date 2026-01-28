@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from database import engine, Base, SessionLocal
-from routers import auth_router, stocks_router, trading_router, portfolio_router, watchlist_router
+from routers import auth_router, stocks_router, trading_router, portfolio_router, watchlist_router, price_alerts_router
 from services.market import MarketService
 
 # Create database tables
@@ -32,6 +32,7 @@ app.include_router(stocks_router)
 app.include_router(trading_router)
 app.include_router(portfolio_router)
 app.include_router(watchlist_router)
+app.include_router(price_alerts_router)
 
 
 @app.on_event("startup")
@@ -56,7 +57,8 @@ def root():
             "stocks": "/stocks",
             "orders": "/orders",
             "portfolio": "/portfolio",
-            "watchlist": "/watchlist"
+            "watchlist": "/watchlist",
+            "alerts": "/alerts"
         }
     }
 

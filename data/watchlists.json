@@ -1,0 +1,54 @@
+{
+  "watchlists": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "symbol": "TSLA"
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "symbol": "NVDA"
+    },
+    {
+      "id": 3,
+      "user_id": 1,
+      "symbol": "AMD"
+    },
+    {
+      "id": 4,
+      "user_id": 2,
+      "symbol": "AAPL"
+    },
+    {
+      "id": 5,
+      "user_id": 2,
+      "symbol": "META"
+    },
+    {
+      "id": 6,
+      "user_id": 3,
+      "symbol": "GOOGL"
+    },
+    {
+      "id": 7,
+      "user_id": 3,
+      "symbol": "MSFT"
+    },
+    {
+      "id": 8,
+      "user_id": 4,
+      "symbol": "TSLA"
+    },
+    {
+      "id": 9,
+      "user_id": 4,
+      "symbol": "V"
+    },
+    {
+      "id": 10,
+      "user_id": 4,
+      "symbol": "DIS"
+    }
+  ]
+}
