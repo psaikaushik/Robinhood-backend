@@ -4,37 +4,66 @@
 
 This is a lightweight Robinhood-style stock trading backend built with Python and FastAPI. Your task is to implement a new feature: **Price Alerts**.
 
-## Getting Started
+---
 
-### 1. Install Dependencies
+## Getting Started with GitHub Codespaces (Recommended)
+
+No local setup required! Everything runs in your browser.
+
+### Step 1: Open in Codespaces
+
+1. Click the green **Code** button at the top of this repo
+2. Click the **Codespaces** tab
+3. Click **Create codespace on main**
+4. Wait ~1 minute for the environment to build
+
+You'll see VS Code in your browser with everything pre-configured!
+
+### Step 2: Verify Setup
+
+Once the Codespace loads, open a terminal (`Ctrl+`` ` or `Cmd+`` `) and run:
 
 ```bash
-pip install -r requirements.txt
+pytest tests/test_price_alerts.py -v
 ```
 
-### 2. Run the Server
+You should see tests failing - that's expected! Your job is to make them pass.
+
+### Step 3: Run the Server (Optional)
+
+To explore the API interactively:
 
 ```bash
 python main.py
 ```
 
-The API will be available at `http://localhost:8000`
+Then click the **Ports** tab at the bottom, find port 8000, and click the globe icon to open the API docs.
 
-- API Documentation: `http://localhost:8000/docs`
-- Alternative Docs: `http://localhost:8000/redoc`
+### Using AI Assistance
 
-### 3. Run Tests
+- **GitHub Copilot** is available for code suggestions
+- **Copilot Chat** (left sidebar) can answer questions about the codebase
+- Feel free to use these tools!
+
+---
+
+## Alternative: Local Setup
+
+If you prefer to run locally:
 
 ```bash
-# Run all tests
-pytest
+# Install dependencies
+pip install -r requirements.txt
 
-# Run only the price alerts tests (your task)
+# Run tests
 pytest tests/test_price_alerts.py -v
 
-# Run with more details
-pytest tests/test_price_alerts.py -v --tb=long
+# Run server
+python main.py
+# API docs at http://localhost:8000/docs
 ```
+
+---
 
 ## Your Task: Implement Price Alerts
 
@@ -97,6 +126,8 @@ All tests in `tests/test_price_alerts.py` should pass:
 ```bash
 pytest tests/test_price_alerts.py -v
 ```
+
+---
 
 ## Project Structure
 
