@@ -1,16 +1,11 @@
 """
 Price Alerts Tests
 
-CANDIDATE TASK: Make all these tests pass by implementing the
-PriceAlertService and price alerts router.
+CANDIDATE TASK:
+1. Implement the PriceAlertService and router to make the PROVIDED tests pass
+2. Write the MISSING tests marked with "TODO: Candidate should write this test"
 
 Run tests with: pytest tests/test_price_alerts.py -v
-
-These tests verify the price alert functionality:
-- Creating alerts
-- Getting alerts
-- Deleting alerts
-- Triggering alerts based on price conditions
 """
 
 import pytest
@@ -54,52 +49,26 @@ class TestCreateAlert:
         assert data["condition"] == "below"
 
     def test_create_alert_invalid_symbol(self, authenticated_client):
-        """Test creating alert for non-existent stock fails."""
-        response = authenticated_client.post(
-            "/alerts",
-            json={
-                "symbol": "INVALID",
-                "target_price": 100.00,
-                "condition": "above"
-            }
-        )
-        assert response.status_code == 404
+        """
+        TODO: Candidate should write this test
 
-    def test_create_alert_invalid_condition(self, authenticated_client):
-        """Test creating alert with invalid condition fails."""
-        response = authenticated_client.post(
-            "/alerts",
-            json={
-                "symbol": "AAPL",
-                "target_price": 100.00,
-                "condition": "invalid"
-            }
-        )
-        assert response.status_code == 422  # Validation error
+        Test that creating an alert for a non-existent stock symbol
+        returns a 404 error.
 
-    def test_create_alert_invalid_price(self, authenticated_client):
-        """Test creating alert with invalid price fails."""
-        response = authenticated_client.post(
-            "/alerts",
-            json={
-                "symbol": "AAPL",
-                "target_price": -50.00,
-                "condition": "above"
-            }
-        )
-        assert response.status_code == 422
+        Hint: Try creating an alert with symbol "INVALID"
+        """
+        pass  # Remove pass and implement the test
 
     def test_create_alert_requires_auth(self, client):
-        """Test creating alert requires authentication."""
-        response = client.post(
-            "/alerts",
-            json={
-                "symbol": "AAPL",
-                "target_price": 200.00,
-                "condition": "above"
-            }
-        )
-        assert response.status_code == 401
+        """
+        TODO: Candidate should write this test
+
+        Test that creating an alert without authentication
+        returns a 401 error.
+
+        Hint: Use 'client' fixture (not 'authenticated_client')
+        """
+        pass  # Remove pass and implement the test
 
 
 class TestGetAlerts:
@@ -128,21 +97,6 @@ class TestGetAlerts:
         data = response.json()
         assert len(data) == 2
 
-    def test_get_alerts_active_only(self, authenticated_client):
-        """Test filtering to only active alerts."""
-        # Create an alert
-        authenticated_client.post(
-            "/alerts",
-            json={"symbol": "AAPL", "target_price": 200.00, "condition": "above"}
-        )
-
-        response = authenticated_client.get("/alerts?active_only=true")
-        assert response.status_code == 200
-        data = response.json()
-        for alert in data:
-            assert alert["is_active"] == True
-            assert alert["is_triggered"] == False
-
     def test_get_alert_by_id(self, authenticated_client):
         """Test getting a specific alert by ID."""
         # Create alert
@@ -158,21 +112,24 @@ class TestGetAlerts:
         assert response.json()["symbol"] == "MSFT"
 
     def test_get_alert_not_found(self, authenticated_client):
-        """Test getting non-existent alert returns 404."""
-        response = authenticated_client.get("/alerts/99999")
-        assert response.status_code == 404
+        """
+        TODO: Candidate should write this test
+
+        Test that getting a non-existent alert (e.g., ID 99999)
+        returns a 404 error.
+        """
+        pass  # Remove pass and implement the test
 
     def test_get_alerts_includes_current_price(self, authenticated_client):
-        """Test that alerts include current stock price."""
-        authenticated_client.post(
-            "/alerts",
-            json={"symbol": "NVDA", "target_price": 1000.00, "condition": "above"}
-        )
+        """
+        TODO: Candidate should write this test
 
-        response = authenticated_client.get("/alerts")
-        data = response.json()[0]
-        assert "current_price" in data
-        assert data["current_price"] > 0
+        Test that when retrieving alerts, each alert includes
+        the current stock price (current_price field > 0).
+
+        Hint: Create an alert, then GET /alerts and check the response
+        """
+        pass  # Remove pass and implement the test
 
 
 class TestDeleteAlert:
@@ -196,9 +153,12 @@ class TestDeleteAlert:
         assert get_response.status_code == 404
 
     def test_delete_alert_not_found(self, authenticated_client):
-        """Test deleting non-existent alert returns 404."""
-        response = authenticated_client.delete("/alerts/99999")
-        assert response.status_code == 404
+        """
+        TODO: Candidate should write this test
+
+        Test that deleting a non-existent alert returns 404.
+        """
+        pass  # Remove pass and implement the test
 
 
 class TestTriggerAlerts:
@@ -252,103 +212,42 @@ class TestTriggerAlerts:
         assert triggered[0]["is_triggered"] == True
 
     def test_alert_not_triggered_when_condition_not_met(self, authenticated_client):
-        """Test alert doesn't trigger when conditions aren't met."""
-        # Get current AAPL price
-        stock_response = authenticated_client.get("/stocks/AAPL")
-        current_price = stock_response.json()["current_price"]
+        """
+        TODO: Candidate should write this test
 
-        # Create alert with target way above current price
-        authenticated_client.post(
-            "/alerts",
-            json={
-                "symbol": "AAPL",
-                "target_price": current_price + 1000,  # Way above
-                "condition": "above"
-            }
-        )
+        Test that an alert does NOT trigger when the condition is not met.
 
-        # Check alerts
-        response = authenticated_client.post("/alerts/check")
-        assert response.status_code == 200
-        triggered = response.json()
-        assert len(triggered) == 0
+        Example: Create an alert for AAPL to trigger when price goes ABOVE
+        (current_price + 1000). Since price is below target, it should NOT trigger.
+
+        Hint: POST /alerts/check should return an empty list
+        """
+        pass  # Remove pass and implement the test
 
     def test_already_triggered_alert_not_triggered_again(self, authenticated_client):
-        """Test that already triggered alerts aren't triggered again."""
-        # Get current price
-        stock_response = authenticated_client.get("/stocks/AAPL")
-        current_price = stock_response.json()["current_price"]
+        """
+        TODO: Candidate should write this test
 
-        # Create alert that will trigger
-        authenticated_client.post(
-            "/alerts",
-            json={
-                "symbol": "AAPL",
-                "target_price": current_price - 10,
-                "condition": "above"
-            }
-        )
+        Test that an alert that has already been triggered
+        is NOT triggered again on subsequent checks.
 
-        # First check - should trigger
-        response1 = authenticated_client.post("/alerts/check")
-        assert len(response1.json()) == 1
-
-        # Second check - should not trigger again
-        response2 = authenticated_client.post("/alerts/check")
-        assert len(response2.json()) == 0
-
-    def test_triggered_alerts_visible_in_list(self, authenticated_client):
-        """Test that triggered alerts appear in the alerts list."""
-        # Get current price
-        stock_response = authenticated_client.get("/stocks/AAPL")
-        current_price = stock_response.json()["current_price"]
-
-        # Create and trigger an alert
-        authenticated_client.post(
-            "/alerts",
-            json={
-                "symbol": "AAPL",
-                "target_price": current_price - 10,
-                "condition": "above"
-            }
-        )
-        authenticated_client.post("/alerts/check")
-
-        # Get all alerts (not just active)
-        response = authenticated_client.get("/alerts")
-        data = response.json()
-        assert len(data) == 1
-        assert data[0]["is_triggered"] == True
+        Steps:
+        1. Create an alert that will trigger immediately
+        2. Call POST /alerts/check - should return 1 triggered alert
+        3. Call POST /alerts/check again - should return 0 (already triggered)
+        """
+        pass  # Remove pass and implement the test
 
     def test_active_only_excludes_triggered(self, authenticated_client):
-        """Test that active_only=true excludes triggered alerts."""
-        # Get current price
-        stock_response = authenticated_client.get("/stocks/AAPL")
-        current_price = stock_response.json()["current_price"]
+        """
+        TODO: Candidate should write this test
 
-        # Create one that will trigger and one that won't
-        authenticated_client.post(
-            "/alerts",
-            json={
-                "symbol": "AAPL",
-                "target_price": current_price - 10,
-                "condition": "above"
-            }
-        )
-        authenticated_client.post(
-            "/alerts",
-            json={
-                "symbol": "AAPL",
-                "target_price": current_price + 1000,
-                "condition": "above"
-            }
-        )
+        Test that GET /alerts?active_only=true excludes triggered alerts.
 
-        # Trigger alerts
-        authenticated_client.post("/alerts/check")
-
-        # Get only active alerts
-        response = authenticated_client.get("/alerts?active_only=true")
-        data = response.json()
-        assert len(data) == 1
-        assert data[0]["is_triggered"] == False
+        Steps:
+        1. Create two alerts - one that will trigger, one that won't
+        2. Call POST /alerts/check to trigger one
+        3. Call GET /alerts?active_only=true
+        4. Verify only the non-triggered alert is returned
+        """
+        pass  # Remove pass and implement the test
