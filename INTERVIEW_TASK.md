@@ -65,11 +65,30 @@ python main.py
 
 ---
 
-## Your Task: Implement Price Alerts
+## Your Task
 
-Users want to be notified when a stock reaches a certain price. You need to implement the Price Alerts feature.
+You have **two objectives**:
 
-### Requirements
+### Part 1: Implement the Price Alerts Feature
+
+Users want to be notified when a stock reaches a certain price. Implement the feature to make the **provided tests pass**.
+
+### Part 2: Write Missing Tests
+
+Some tests in `test_price_alerts.py` are marked as **TODO**. You need to write these tests yourself. Look for:
+
+```python
+def test_something(self, authenticated_client):
+    """
+    TODO: Candidate should write this test
+    ...
+    """
+    pass  # Remove pass and implement the test
+```
+
+---
+
+## Part 1 Requirements
 
 1. Users can create price alerts with:
    - A stock symbol (must exist in the system)
@@ -121,11 +140,14 @@ Users want to be notified when a stock reaches a certain price. You need to impl
 
 ### Success Criteria
 
-All tests in `tests/test_price_alerts.py` should pass:
+1. **All provided tests pass** (tests without TODO comments)
+2. **All TODO tests are implemented** and pass
 
 ```bash
 pytest tests/test_price_alerts.py -v
 ```
+
+You should see **0 failed, 0 skipped** when complete.
 
 ---
 

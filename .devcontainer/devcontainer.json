@@ -9,9 +9,9 @@
   "customizations": {
     "vscode": {
       "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
         "python.testing.pytestEnabled": true,
-        "python.testing.pytestPath": "pytest",
+        "python.testing.pytestPath": "${workspaceFolder}/.venv/bin/pytest",
         "python.testing.pytestArgs": ["tests/"],
         "editor.formatOnSave": true,
         "editor.rulers": [100],
@@ -28,9 +28,9 @@
     }
   },
 
-  "postCreateCommand": "pip install -r requirements.txt && echo '✅ Setup complete! Run: pytest tests/test_price_alerts.py -v'",
+  "postCreateCommand": "python -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt && pip uninstall pytest-asyncio -y 2>/dev/null; echo '✅ Setup complete! Run: pytest tests/test_price_alerts.py -v'",
 
-  "postStartCommand": "echo '🚀 Welcome! Your task: Make all tests pass in tests/test_price_alerts.py'",
+  "postStartCommand": "echo '🚀 Welcome! Your task: Make all tests pass in tests/test_price_alerts.py' && echo '💡 Tip: Run \"source .venv/bin/activate\" if pytest is not found'",
 
   "forwardPorts": [8000],
 
