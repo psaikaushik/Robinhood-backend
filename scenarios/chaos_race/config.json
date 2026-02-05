@@ -1,0 +1,13 @@
+{
+  "id": "chaos_race",
+  "name": "Chaos: Race Conditions",
+  "description": "Simulate concurrent requests that could cause race conditions.",
+  "difficulty": "advanced",
+  "challenges": [
+    "What if check_alerts is called twice simultaneously?",
+    "Could an alert be triggered twice?",
+    "What about deleting an alert while checking?"
+  ],
+  "interviewer_notes": "Discuss concurrency issues. Ask candidate how they would prevent double-triggering. Look for: database transactions, optimistic locking, idempotency.",
+  "interviewer_prompt": "Imagine two instances of our service call check_alerts at the exact same time. Could an alert be triggered twice? How would you prevent this? Let's discuss and implement a solution."
+}

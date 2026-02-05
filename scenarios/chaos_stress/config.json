@@ -1,0 +1,13 @@
+{
+  "id": "chaos_stress",
+  "name": "Chaos: High Volume Stress",
+  "description": "User has hundreds of alerts. Tests performance and efficient querying.",
+  "difficulty": "advanced",
+  "challenges": [
+    "User has 500+ existing alerts",
+    "Multiple alerts for same stock",
+    "Check endpoint must handle large datasets efficiently"
+  ],
+  "interviewer_notes": "Tests if candidate thinks about performance. Naive implementations will be slow. Look for: pagination, efficient DB queries, batch processing.",
+  "interviewer_prompt": "Your implementation works great for a few alerts. But we have power users with hundreds of alerts. Can you optimize your check_and_trigger_alerts to handle this efficiently? Think about database query optimization and batch processing."
+}
