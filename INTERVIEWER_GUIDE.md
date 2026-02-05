@@ -175,6 +175,46 @@ curl -X POST "http://localhost:8000/alerts/check-concurrent?num_concurrent=5" \
 
 ---
 
+## Using the Reference Implementation (For Demos)
+
+The candidate sees **stubs** in `services/price_alerts.py`. But to demo chaos_stress and chaos_race, you need a working (but intentionally naive) implementation.
+
+**Reference file:** `services/price_alerts_reference.py`
+
+### To Demo Chaos Scenarios:
+
+1. **Copy the reference implementation:**
+   ```bash
+   cp services/price_alerts_reference.py services/price_alerts.py
+   ```
+
+2. **Start with chaos scenario:**
+   ```bash
+   SCENARIO=chaos_stress python main.py
+   # or
+   SCENARIO=chaos_race python main.py
+   ```
+
+3. **Demo the performance/race issues** (see sections above)
+
+4. **Reset for candidate interviews:**
+   ```bash
+   git checkout services/price_alerts.py
+   ```
+
+### Why a Separate File?
+
+- **Candidates** need to see stubs and implement from scratch
+- **Interviewers** need working code to demo chaos scenarios
+- The reference implementation has **intentional problems**:
+  - N+1 queries (500 alerts = 500 DB queries)
+  - Individual commits per alert (slow I/O)
+  - No locking (race condition vulnerable)
+
+These problems make chaos_stress slow and chaos_race trigger race conditions—perfect for demonstrating what candidates should fix.
+
+---
+
 ## Demo Script for Video
 
 ### 1. Show Default Flow
@@ -192,6 +232,10 @@ curl http://localhost:8000/stocks/GOOGL  # Shows negative price!
 
 ### 3. Show Chaos Stress
 ```bash
+# First, copy the naive reference implementation
+cp services/price_alerts_reference.py services/price_alerts.py
+
+# Start with chaos_stress
 SCENARIO=chaos_stress python main.py
 # Watch 500 alerts being created
 # Login as stresstest, call /alerts/check, show it's slow
@@ -199,10 +243,16 @@ SCENARIO=chaos_stress python main.py
 
 ### 4. Show Chaos Race
 ```bash
+# First, copy the naive reference implementation (if not already done)
+cp services/price_alerts_reference.py services/price_alerts.py
+
 SCENARIO=chaos_race python main.py
 # Create triggerable alert
 # Call /alerts/check-concurrent
 # Show race condition detection
+
+# Reset after demo
+git checkout services/price_alerts.py
 ```
 
 ---
