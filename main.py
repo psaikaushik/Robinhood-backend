@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from database import engine, Base, SessionLocal
 from routers import auth_router, stocks_router, trading_router, portfolio_router, watchlist_router, price_alerts_router
 from services.market import MarketService
+from services.scenario import get_scenario_manager, ScenarioManager
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -67,6 +68,24 @@ def root():
 def health_check():
     """Health check endpoint."""
     return {"status": "healthy"}
+
+
+# ============== INTERVIEWER ENDPOINTS (Chaos Engineering) ==============
+
+@app.get("/scenario", tags=["Interviewer"])
+def get_current_scenario():
+    """Get current chaos scenario info. FOR INTERVIEWERS ONLY."""
+    scenario_mgr = get_scenario_manager()
+    return scenario_mgr.get_scenario_info()
+
+
+@app.get("/scenarios", tags=["Interviewer"])
+def list_scenarios():
+    """List all available chaos scenarios. FOR INTERVIEWERS ONLY."""
+    return {
+        "scenarios": ScenarioManager.list_scenarios(),
+        "usage": "Set SCENARIO=<id> environment variable and restart server"
+    }
 
 
 if __name__ == "__main__":

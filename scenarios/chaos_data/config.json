@@ -1,0 +1,14 @@
+{
+  "id": "chaos_data",
+  "name": "Chaos: Data Inconsistencies",
+  "description": "Stock data has inconsistencies - negative prices, null values, and invalid data.",
+  "difficulty": "intermediate",
+  "challenges": [
+    "Some stocks have negative prices",
+    "Some stocks have null/missing current_price",
+    "Some stocks have price = 0",
+    "One stock has extremely large price (overflow potential)"
+  ],
+  "interviewer_notes": "Ask candidate to make their price alerts robust against bad data. Their code should handle edge cases gracefully.",
+  "interviewer_prompt": "Great job implementing the basic feature! Now, we've discovered that our stock data feed sometimes has issues - negative prices, missing values, etc. Can you update your implementation to handle these edge cases gracefully? The alerts should not crash or produce incorrect results when encountering bad data."
+}

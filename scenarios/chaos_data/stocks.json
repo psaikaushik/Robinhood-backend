@@ -1,0 +1,108 @@
+{
+  "stocks": [
+    {
+      "symbol": "AAPL",
+      "name": "Apple Inc.",
+      "current_price": 178.50,
+      "previous_close": 176.25,
+      "day_high": 180.00,
+      "day_low": 175.50,
+      "volume": 45000000,
+      "market_cap": 2800000000000,
+      "sector": "Technology"
+    },
+    {
+      "symbol": "GOOGL",
+      "name": "Alphabet Inc.",
+      "current_price": -50.25,
+      "previous_close": 139.80,
+      "day_high": 143.00,
+      "day_low": 138.50,
+      "volume": 22000000,
+      "market_cap": 1750000000000,
+      "sector": "Technology",
+      "_chaos_note": "NEGATIVE PRICE - data feed error"
+    },
+    {
+      "symbol": "MSFT",
+      "name": "Microsoft Corporation",
+      "current_price": 378.90,
+      "previous_close": 375.00,
+      "day_high": 382.00,
+      "day_low": 374.00,
+      "volume": 18000000,
+      "market_cap": 2810000000000,
+      "sector": "Technology"
+    },
+    {
+      "symbol": "AMZN",
+      "name": "Amazon.com Inc.",
+      "current_price": null,
+      "previous_close": 180.00,
+      "day_high": 181.50,
+      "day_low": 176.00,
+      "volume": 35000000,
+      "market_cap": 1850000000000,
+      "sector": "Consumer Cyclical",
+      "_chaos_note": "NULL PRICE - missing data"
+    },
+    {
+      "symbol": "TSLA",
+      "name": "Tesla Inc.",
+      "current_price": 0,
+      "previous_close": 252.00,
+      "day_high": 255.00,
+      "day_low": 245.00,
+      "volume": 80000000,
+      "market_cap": 790000000000,
+      "sector": "Automotive",
+      "_chaos_note": "ZERO PRICE - trading halted?"
+    },
+    {
+      "symbol": "META",
+      "name": "Meta Platforms Inc.",
+      "current_price": 505.25,
+      "previous_close": 500.00,
+      "day_high": 510.00,
+      "day_low": 498.00,
+      "volume": 15000000,
+      "market_cap": 1300000000000,
+      "sector": "Technology"
+    },
+    {
+      "symbol": "NVDA",
+      "name": "NVIDIA Corporation",
+      "current_price": 999999999999.99,
+      "previous_close": 860.00,
+      "day_high": 890.00,
+      "day_low": 855.00,
+      "volume": 40000000,
+      "market_cap": 2160000000000,
+      "sector": "Technology",
+      "_chaos_note": "OVERFLOW PRICE - data corruption"
+    },
+    {
+      "symbol": "JPM",
+      "name": "JPMorgan Chase & Co.",
+      "current_price": 198.45,
+      "previous_close": 196.00,
+      "day_high": 200.00,
+      "day_low": 195.00,
+      "volume": 8000000,
+      "market_cap": 570000000000,
+      "sector": "Financial Services"
+    },
+    {
+      "symbol": "BROKEN",
+      "name": "",
+      "current_price": 100.00,
+      "previous_close": null,
+      "day_high": null,
+      "day_low": null,
+      "volume": -1000,
+      "market_cap": null,
+      "sector": null,
+      "_chaos_note": "MISSING FIELDS - incomplete data"
+    }
+  ]
+}

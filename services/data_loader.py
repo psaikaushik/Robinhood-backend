@@ -3,25 +3,36 @@ import os
 from typing import List, Dict, Any, Optional
 from pathlib import Path
 
+from services.scenario import get_scenario_manager
+
 # Default data directory
 DATA_DIR = Path(__file__).parent.parent / "data"
 
 
 class DataLoader:
-    """Service for loading data from JSON files."""
+    """Service for loading data from JSON files. Supports scenario-based data loading."""
 
     def __init__(self, data_dir: Optional[Path] = None):
         self.data_dir = data_dir or DATA_DIR
         self._cache: Dict[str, Any] = {}
 
     def _load_json(self, filename: str) -> Dict[str, Any]:
-        """Load and cache JSON file."""
+        """Load and cache JSON file. Checks scenario override first."""
         if filename not in self._cache:
-            filepath = self.data_dir / filename
+            # Use scenario manager to get correct path
+            scenario_mgr = get_scenario_manager()
+            filepath = scenario_mgr.get_data_path(filename)
+
+            if not filepath.exists():
+                # Fall back to default data dir
+                filepath = self.data_dir / filename
+
             if not filepath.exists():
                 raise FileNotFoundError(f"Data file not found: {filepath}")
+
             with open(filepath, "r") as f:
                 self._cache[filename] = json.load(f)
+        return self._cache[filename]
         return self._cache[filename]
 
     def clear_cache(self):

@@ -1,0 +1,8 @@
+{
+  "id": "default",
+  "name": "Default - Clean Data",
+  "description": "Normal operating conditions. All data is valid and consistent.",
+  "difficulty": "beginner",
+  "challenges": [],
+  "interviewer_notes": "Use this for the initial price alerts implementation task."
+}
