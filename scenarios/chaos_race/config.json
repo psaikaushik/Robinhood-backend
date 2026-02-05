@@ -1,13 +1,17 @@
 {
   "id": "chaos_race",
   "name": "Chaos: Race Conditions",
-  "description": "Simulate concurrent requests that could cause race conditions.",
+  "description": "Introduces artificial delays to expose race condition vulnerabilities.",
   "difficulty": "advanced",
   "challenges": [
-    "What if check_alerts is called twice simultaneously?",
-    "Could an alert be triggered twice?",
-    "What about deleting an alert while checking?"
+    "Artificial delay between check and trigger makes race conditions likely",
+    "Concurrent /alerts/check calls may double-trigger alerts",
+    "Tests need for proper locking/transactions"
   ],
-  "interviewer_notes": "Discuss concurrency issues. Ask candidate how they would prevent double-triggering. Look for: database transactions, optimistic locking, idempotency.",
-  "interviewer_prompt": "Imagine two instances of our service call check_alerts at the exact same time. Could an alert be triggered twice? How would you prevent this? Let's discuss and implement a solution."
+  "interviewer_notes": "Use the /alerts/check-concurrent endpoint to simulate 5 parallel checks. Watch for double triggers. Ask candidate how they would prevent this.",
+  "interviewer_prompt": "I'm going to hit an endpoint that simulates 5 concurrent check requests. Watch what happens to the alerts. Can you explain the bug and how to fix it?",
+  "setup": {
+    "artificial_delay_ms": 500,
+    "enable_concurrent_test_endpoint": true
+  }
 }
