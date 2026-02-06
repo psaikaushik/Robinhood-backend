@@ -99,7 +99,7 @@ services:
       - PASSWORD=
     volumes:
       - workspace:/home/coder/workspace
-      - ./target-app:/home/coder/workspace/robinhood-backend:ro
+      - ./target-app:/home/coder/workspace/robinhood-backend
 
   target-app:
     build:
