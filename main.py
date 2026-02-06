@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 
 from database import engine, Base, SessionLocal, get_db
 from routers import auth_router, stocks_router, trading_router, portfolio_router, watchlist_router, price_alerts_router
+from routers.admin import router as admin_router
 from services.market import MarketService
 from services.scenario import get_scenario_manager, ScenarioManager
 from services.auth import AuthService, get_current_user
@@ -43,6 +44,7 @@ app.include_router(trading_router)
 app.include_router(portfolio_router)
 app.include_router(watchlist_router)
 app.include_router(price_alerts_router)
+app.include_router(admin_router, prefix="/admin", tags=["Admin"])
 
 
 @app.on_event("startup")
