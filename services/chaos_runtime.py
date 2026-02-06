@@ -87,25 +87,25 @@ class ChaosRuntime:
         # Corrupt GOOGL - negative price
         googl = db.query(Stock).filter(Stock.symbol == "GOOGL").first()
         if googl:
-            googl.price = -50.25
+            googl.current_price = -50.25
             result["corrupted_stocks"].append({"symbol": "GOOGL", "issue": "negative price"})
 
         # Corrupt AMZN - null price (set to 0 as SQLite doesn't support null for this)
         amzn = db.query(Stock).filter(Stock.symbol == "AMZN").first()
         if amzn:
-            amzn.price = 0
+            amzn.current_price = 0
             result["corrupted_stocks"].append({"symbol": "AMZN", "issue": "zero price"})
 
         # Corrupt TSLA - extremely high price (overflow-like)
         tsla = db.query(Stock).filter(Stock.symbol == "TSLA").first()
         if tsla:
-            tsla.price = 999999999999.99
+            tsla.current_price = 999999999999.99
             result["corrupted_stocks"].append({"symbol": "TSLA", "issue": "overflow price"})
 
         # Corrupt NVDA - NaN-like value (negative zero situation)
         nvda = db.query(Stock).filter(Stock.symbol == "NVDA").first()
         if nvda:
-            nvda.price = -0.0001
+            nvda.current_price = -0.0001
             result["corrupted_stocks"].append({"symbol": "NVDA", "issue": "near-zero negative"})
 
         db.commit()
@@ -149,7 +149,7 @@ class ChaosRuntime:
         alerts_created = 0
         for i in range(500):
             stock = random.choice(stocks)
-            target_price = stock.price * random.uniform(0.8, 1.2)
+            target_price = stock.current_price * random.uniform(0.8, 1.2)
             condition = random.choice(["above", "below"])
 
             alert = PriceAlert(
@@ -213,8 +213,8 @@ class ChaosRuntime:
         count = 0
         for symbol, price in original_prices.items():
             stock = db.query(Stock).filter(Stock.symbol == symbol).first()
-            if stock and (stock.price < 0 or stock.price > 10000 or stock.price == 0):
-                stock.price = price
+            if stock and (stock.current_price < 0 or stock.current_price > 10000 or stock.current_price == 0):
+                stock.current_price = price
                 count += 1
 
         if count > 0:
