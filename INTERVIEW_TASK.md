@@ -18,11 +18,9 @@ Your coding environment is already set up in the browser - no local installation
 
 ### Step 1: Verify Setup
 
-Open a terminal in VS Code and run:
+Open a terminal in VS Code (press `` Ctrl+` ``) and run:
 
 ```bash
-cd /home/coder/workspace/robinhood-backend
-source .venv/bin/activate
 pytest tests/test_price_alerts.py -v
 ```
 
@@ -188,9 +186,6 @@ You should see **0 failed, 0 skipped** when complete.
 ## Quick Reference
 
 ```bash
-# Activate virtual environment
-source .venv/bin/activate
-
 # Run tests
 pytest tests/test_price_alerts.py -v
 
