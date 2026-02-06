@@ -42,15 +42,23 @@ def create_alert(
     - **symbol**: Stock ticker symbol (e.g., "AAPL")
     - **target_price**: The price that triggers the alert
     - **condition**: "above" or "below"
-
-    CANDIDATE TODO: Implement this endpoint
     """
-    # TODO: Implement this endpoint
-    # Hint: Use PriceAlertService.create_alert()
-    # Don't forget to include current_price in the response
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Candidate must implement this endpoint"
+    created_alert = PriceAlertService.create_alert(db, current_user, alert)
+
+    # Get current stock price
+    stock = MarketService.get_stock(db, created_alert.symbol)
+    current_price = stock.current_price if stock else None
+
+    return PriceAlertResponse(
+        id=created_alert.id,
+        symbol=created_alert.symbol,
+        target_price=created_alert.target_price,
+        condition=created_alert.condition,
+        is_triggered=created_alert.is_triggered,
+        is_active=created_alert.is_active,
+        created_at=created_alert.created_at,
+        triggered_at=created_alert.triggered_at,
+        current_price=current_price
     )
 
 
@@ -64,16 +72,27 @@ def get_alerts(
     Get all price alerts for the current user.
 
     - **active_only**: If true, only return non-triggered active alerts
-
-    CANDIDATE TODO: Implement this endpoint
     """
-    # TODO: Implement this endpoint
-    # Hint: Use PriceAlertService.get_alerts()
-    # Don't forget to include current_price for each alert
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Candidate must implement this endpoint"
-    )
+    alerts = PriceAlertService.get_alerts(db, current_user, active_only)
+
+    result = []
+    for alert in alerts:
+        stock = MarketService.get_stock(db, alert.symbol)
+        current_price = stock.current_price if stock else None
+
+        result.append(PriceAlertResponse(
+            id=alert.id,
+            symbol=alert.symbol,
+            target_price=alert.target_price,
+            condition=alert.condition,
+            is_triggered=alert.is_triggered,
+            is_active=alert.is_active,
+            created_at=alert.created_at,
+            triggered_at=alert.triggered_at,
+            current_price=current_price
+        ))
+
+    return result
 
 
 @router.get("/{alert_id}", response_model=PriceAlertResponse)
@@ -84,13 +103,22 @@ def get_alert(
 ):
     """
     Get a specific price alert by ID.
-
-    CANDIDATE TODO: Implement this endpoint
     """
-    # TODO: Implement this endpoint
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Candidate must implement this endpoint"
+    alert = PriceAlertService.get_alert(db, current_user, alert_id)
+
+    stock = MarketService.get_stock(db, alert.symbol)
+    current_price = stock.current_price if stock else None
+
+    return PriceAlertResponse(
+        id=alert.id,
+        symbol=alert.symbol,
+        target_price=alert.target_price,
+        condition=alert.condition,
+        is_triggered=alert.is_triggered,
+        is_active=alert.is_active,
+        created_at=alert.created_at,
+        triggered_at=alert.triggered_at,
+        current_price=current_price
     )
 
 
@@ -102,14 +130,9 @@ def delete_alert(
 ):
     """
     Delete a price alert.
-
-    CANDIDATE TODO: Implement this endpoint
     """
-    # TODO: Implement this endpoint
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Candidate must implement this endpoint"
-    )
+    PriceAlertService.delete_alert(db, current_user, alert_id)
+    return None
 
 
 @router.post("/check", response_model=List[PriceAlertResponse])
@@ -121,12 +144,24 @@ def check_alerts(
     Check all active alerts and trigger any that meet their conditions.
 
     Returns the list of alerts that were triggered.
-
-    CANDIDATE TODO: Implement this endpoint
     """
-    # TODO: Implement this endpoint
-    # Hint: Use PriceAlertService.check_and_trigger_alerts()
-    raise HTTPException(
-        status_code=status.HTTP_501_NOT_IMPLEMENTED,
-        detail="Candidate must implement this endpoint"
-    )
+    triggered_alerts = PriceAlertService.check_and_trigger_alerts(db, current_user)
+
+    result = []
+    for alert in triggered_alerts:
+        stock = MarketService.get_stock(db, alert.symbol)
+        current_price = stock.current_price if stock else None
+
+        result.append(PriceAlertResponse(
+            id=alert.id,
+            symbol=alert.symbol,
+            target_price=alert.target_price,
+            condition=alert.condition,
+            is_triggered=alert.is_triggered,
+            is_active=alert.is_active,
+            created_at=alert.created_at,
+            triggered_at=alert.triggered_at,
+            current_price=current_price
+        ))
+
+    return result

@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from typing import Optional
 
-from services.database import get_db
+from database import get_db
 from services.chaos_runtime import ChaosRuntime
 
 router = APIRouter()

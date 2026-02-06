@@ -54,11 +54,29 @@ class PriceAlertService:
         Raises:
             HTTPException(404): If the stock symbol doesn't exist
             HTTPException(400): If there's a validation error
-
-        CANDIDATE TODO: Implement this method
         """
-        # TODO: Implement this method
-        raise NotImplementedError("Candidate must implement create_alert")
+        symbol = alert_data.symbol.upper()
+
+        # Verify stock exists
+        stock = MarketService.get_stock(db, symbol)
+        if not stock:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Stock {symbol} not found"
+            )
+
+        alert = PriceAlert(
+            user_id=user.id,
+            symbol=symbol,
+            target_price=alert_data.target_price,
+            condition=alert_data.condition.lower(),
+            is_triggered=False,
+            is_active=True
+        )
+        db.add(alert)
+        db.commit()
+        db.refresh(alert)
+        return alert
 
     @staticmethod
     def get_alerts(db: Session, user: User, active_only: bool = False) -> List[PriceAlert]:
@@ -72,11 +90,16 @@ class PriceAlertService:
 
         Returns:
             List of PriceAlert objects
-
-        CANDIDATE TODO: Implement this method
         """
-        # TODO: Implement this method
-        raise NotImplementedError("Candidate must implement get_alerts")
+        query = db.query(PriceAlert).filter(PriceAlert.user_id == user.id)
+
+        if active_only:
+            query = query.filter(
+                PriceAlert.is_active == True,
+                PriceAlert.is_triggered == False
+            )
+
+        return query.order_by(PriceAlert.created_at.desc()).all()
 
     @staticmethod
     def get_alert(db: Session, user: User, alert_id: int) -> PriceAlert:
@@ -93,11 +116,19 @@ class PriceAlertService:
 
         Raises:
             HTTPException(404): If alert not found or doesn't belong to user
-
-        CANDIDATE TODO: Implement this method
         """
-        # TODO: Implement this method
-        raise NotImplementedError("Candidate must implement get_alert")
+        alert = db.query(PriceAlert).filter(
+            PriceAlert.id == alert_id,
+            PriceAlert.user_id == user.id
+        ).first()
+
+        if not alert:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Alert {alert_id} not found"
+            )
+
+        return alert
 
     @staticmethod
     def delete_alert(db: Session, user: User, alert_id: int) -> None:
@@ -111,11 +142,10 @@ class PriceAlertService:
 
         Raises:
             HTTPException(404): If alert not found or doesn't belong to user
-
-        CANDIDATE TODO: Implement this method
         """
-        # TODO: Implement this method
-        raise NotImplementedError("Candidate must implement delete_alert")
+        alert = PriceAlertService.get_alert(db, user, alert_id)
+        db.delete(alert)
+        db.commit()
 
     @staticmethod
     def check_and_trigger_alerts(db: Session, user: User) -> List[PriceAlert]:
@@ -137,8 +167,35 @@ class PriceAlertService:
 
         Returns:
             List of alerts that were triggered in this check
-
-        CANDIDATE TODO: Implement this method
         """
-        # TODO: Implement this method
-        raise NotImplementedError("Candidate must implement check_and_trigger_alerts")
+        # Get active, non-triggered alerts
+        alerts = db.query(PriceAlert).filter(
+            PriceAlert.user_id == user.id,
+            PriceAlert.is_active == True,
+            PriceAlert.is_triggered == False
+        ).all()
+
+        triggered = []
+
+        for alert in alerts:
+            stock = MarketService.get_stock(db, alert.symbol)
+            if not stock:
+                continue
+
+            current_price = stock.current_price
+            should_trigger = False
+
+            if alert.condition == "above" and current_price >= alert.target_price:
+                should_trigger = True
+            elif alert.condition == "below" and current_price <= alert.target_price:
+                should_trigger = True
+
+            if should_trigger:
+                alert.is_triggered = True
+                alert.triggered_at = datetime.utcnow()
+                triggered.append(alert)
+
+        if triggered:
+            db.commit()
+
+        return triggered
