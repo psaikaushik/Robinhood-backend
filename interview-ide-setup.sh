@@ -322,7 +322,7 @@ class ClaudeService:
         messages = []
         if history:
             for msg in history:
-                messages.append({"role": msg["role"], "content": msg["content"]})
+                messages.append({"role": msg.role, "content": msg.content})
 
         current_content = message
         if context:
