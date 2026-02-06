@@ -199,3 +199,108 @@ class PriceAlertService:
             db.commit()
 
         return triggered
+
+
+# =============================================================================
+# STUB VERSION FOR CANDIDATES (Comment out above implementation, uncomment below)
+# =============================================================================
+#
+# class PriceAlertService:
+#     """
+#     Service for managing price alerts.
+#
+#     CANDIDATE TODO: Implement all methods below.
+#     """
+#
+#     @staticmethod
+#     def create_alert(db: Session, user: User, alert_data: PriceAlertCreate) -> PriceAlert:
+#         """
+#         Create a new price alert for a user.
+#
+#         Args:
+#             db: Database session
+#             user: The user creating the alert
+#             alert_data: The alert details (symbol, target_price, condition)
+#
+#         Returns:
+#             The created PriceAlert object
+#
+#         Raises:
+#             HTTPException(404): If the stock symbol doesn't exist
+#         """
+#         # TODO: Implement this method
+#         raise NotImplementedError("Candidate must implement create_alert")
+#
+#     @staticmethod
+#     def get_alerts(db: Session, user: User, active_only: bool = False) -> List[PriceAlert]:
+#         """
+#         Get all price alerts for a user.
+#
+#         Args:
+#             db: Database session
+#             user: The user whose alerts to retrieve
+#             active_only: If True, only return non-triggered active alerts
+#
+#         Returns:
+#             List of PriceAlert objects
+#         """
+#         # TODO: Implement this method
+#         raise NotImplementedError("Candidate must implement get_alerts")
+#
+#     @staticmethod
+#     def get_alert(db: Session, user: User, alert_id: int) -> PriceAlert:
+#         """
+#         Get a specific price alert by ID.
+#
+#         Args:
+#             db: Database session
+#             user: The user (for ownership verification)
+#             alert_id: The alert ID to retrieve
+#
+#         Returns:
+#             The PriceAlert object
+#
+#         Raises:
+#             HTTPException(404): If alert not found or doesn't belong to user
+#         """
+#         # TODO: Implement this method
+#         raise NotImplementedError("Candidate must implement get_alert")
+#
+#     @staticmethod
+#     def delete_alert(db: Session, user: User, alert_id: int) -> None:
+#         """
+#         Delete a price alert.
+#
+#         Args:
+#             db: Database session
+#             user: The user (for ownership verification)
+#             alert_id: The alert ID to delete
+#
+#         Raises:
+#             HTTPException(404): If alert not found or doesn't belong to user
+#         """
+#         # TODO: Implement this method
+#         raise NotImplementedError("Candidate must implement delete_alert")
+#
+#     @staticmethod
+#     def check_and_trigger_alerts(db: Session, user: User) -> List[PriceAlert]:
+#         """
+#         Check all active alerts for a user and trigger any that meet conditions.
+#
+#         An alert should be triggered when:
+#         - condition is "above" and current_price >= target_price
+#         - condition is "below" and current_price <= target_price
+#
+#         When triggered:
+#         - Set is_triggered = True
+#         - Set triggered_at = current timestamp
+#
+#         Args:
+#             db: Database session
+#             user: The user whose alerts to check
+#
+#         Returns:
+#             List of alerts that were triggered in this check
+#         """
+#         # TODO: Implement this method
+#         raise NotImplementedError("Candidate must implement check_and_trigger_alerts")
