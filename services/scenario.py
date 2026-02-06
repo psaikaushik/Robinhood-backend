@@ -92,8 +92,33 @@ class ScenarioManager:
             "name": self.config.get("name", "Unknown"),
             "description": self.config.get("description", ""),
             "difficulty": self.config.get("difficulty", "unknown"),
-            "challenges": self.config.get("challenges", [])
+            "challenges": self.config.get("challenges", []),
+            "setup": self.config.get("setup", {})
         }
+
+    def get_setup(self) -> Dict[str, Any]:
+        """Get scenario setup configuration."""
+        return self.config.get("setup", {})
+
+    def should_pre_populate_alerts(self) -> bool:
+        """Check if scenario requires pre-populating alerts."""
+        setup = self.get_setup()
+        return setup.get("pre_populate_alerts", 0) > 0
+
+    def get_pre_populate_alert_count(self) -> int:
+        """Get number of alerts to pre-populate."""
+        setup = self.get_setup()
+        return setup.get("pre_populate_alerts", 0)
+
+    def get_artificial_delay_ms(self) -> int:
+        """Get artificial delay in milliseconds (for race condition testing)."""
+        setup = self.get_setup()
+        return setup.get("artificial_delay_ms", 0)
+
+    def is_concurrent_test_enabled(self) -> bool:
+        """Check if concurrent test endpoint should be enabled."""
+        setup = self.get_setup()
+        return setup.get("enable_concurrent_test_endpoint", False)
 
     @classmethod
     def list_scenarios(cls) -> List[Dict[str, Any]]:

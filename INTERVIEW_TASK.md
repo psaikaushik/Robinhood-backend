@@ -1,27 +1,24 @@
 # Robinhood Backend - Interview Coding Task
 
-## Overview
+## Welcome!
 
 This is a lightweight Robinhood-style stock trading backend built with Python and FastAPI. Your task is to implement a new feature: **Price Alerts**.
 
 ---
 
-## Getting Started with GitHub Codespaces (Recommended)
+## Getting Started
 
-No local setup required! Everything runs in your browser.
+Your coding environment is already set up in the browser - no local installation needed!
 
-### Step 1: Open in Codespaces
+### The Interface
 
-1. Click the green **Code** button at the top of this repo
-2. Click the **Codespaces** tab
-3. Click **Create codespace on main**
-4. Wait ~1 minute for the environment to build
+- **Left Panel**: VS Code editor with the codebase
+- **Right Panel**: Claude AI assistant (feel free to ask questions!)
+- **Terminal**: Click `Terminal > New Terminal` in VS Code to run commands
 
-You'll see VS Code in your browser with everything pre-configured!
+### Step 1: Verify Setup
 
-### Step 2: Verify Setup
-
-Once the Codespace loads, open a terminal (`Ctrl+`` ` or `Cmd+`` `) and run:
+Open a terminal in VS Code (press `` Ctrl+` ``) and run:
 
 ```bash
 pytest tests/test_price_alerts.py -v
@@ -29,7 +26,7 @@ pytest tests/test_price_alerts.py -v
 
 You should see tests failing - that's expected! Your job is to make them pass.
 
-### Step 3: Run the Server (Optional)
+### Step 2: Run the Server (Optional)
 
 To explore the API interactively:
 
@@ -37,31 +34,16 @@ To explore the API interactively:
 python main.py
 ```
 
-Then click the **Ports** tab at the bottom, find port 8000, and click the globe icon to open the API docs.
+Then open http://localhost:8000/docs to see the API documentation.
 
 ### Using AI Assistance
 
-- **GitHub Copilot** is available for code suggestions
-- **Copilot Chat** (left sidebar) can answer questions about the codebase
-- Feel free to use these tools!
+The **Claude AI** assistant is available in the right sidebar. You can:
+- Ask questions about the codebase
+- Get help debugging errors
+- Discuss your approach
 
----
-
-## Alternative: Local Setup
-
-If you prefer to run locally:
-
-```bash
-# Install dependencies
-pip install -r requirements.txt
-
-# Run tests
-pytest tests/test_price_alerts.py -v
-
-# Run server
-python main.py
-# API docs at http://localhost:8000/docs
-```
+Feel free to use it as a resource!
 
 ---
 
@@ -155,64 +137,39 @@ You should see **0 failed, 0 skipped** when complete.
 
 ```
 ├── main.py                 # FastAPI application entry point
-├── config.py               # Configuration settings
 ├── database.py             # Database setup
 ├── data/                   # JSON data files
 │   ├── stocks.json         # Stock data
 │   ├── users.json          # Sample users
-│   ├── holdings.json       # Sample holdings
-│   ├── orders.json         # Sample orders
-│   └── watchlists.json     # Sample watchlists
+│   └── ...
 ├── models/                 # SQLAlchemy models
 │   ├── user.py
 │   ├── stock.py
-│   ├── portfolio.py
-│   ├── order.py
-│   ├── watchlist.py
 │   └── price_alert.py      # Provided for you
 ├── schemas/                # Pydantic schemas
-│   ├── user.py
-│   ├── stock.py
-│   ├── portfolio.py
-│   ├── order.py
-│   ├── watchlist.py
 │   └── price_alert.py      # Provided for you
 ├── services/               # Business logic
-│   ├── auth.py
-│   ├── market.py
-│   ├── trading.py
-│   ├── data_loader.py
+│   ├── market.py           # Reference implementation
+│   ├── trading.py          # Reference implementation
 │   └── price_alerts.py     # TODO: Implement this
 ├── routers/                # API endpoints
-│   ├── auth.py
-│   ├── stocks.py
-│   ├── trading.py
-│   ├── portfolio.py
-│   ├── watchlist.py
+│   ├── watchlist.py        # Reference implementation
 │   └── price_alerts.py     # TODO: Implement this
-└── tests/                  # Tests
-    ├── conftest.py         # Test fixtures
-    ├── test_auth.py
-    ├── test_stocks.py
-    ├── test_trading.py
-    ├── test_portfolio.py
-    ├── test_watchlist.py
+└── tests/
     └── test_price_alerts.py  # Tests you need to pass
 ```
 
 ## API Overview
 
-### Existing Endpoints
+### Existing Endpoints (for reference)
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | /auth/register | Register new user |
 | POST | /auth/login | Login and get token |
-| GET | /auth/me | Get current user |
 | GET | /stocks | List all stocks |
 | GET | /stocks/{symbol} | Get stock details |
 | POST | /orders | Place an order |
-| GET | /orders | List orders |
 | GET | /portfolio | Get portfolio |
 | GET | /watchlist | Get watchlist |
 
@@ -226,17 +183,22 @@ You should see **0 failed, 0 skipped** when complete.
 | DELETE | /alerts/{id} | Delete alert |
 | POST | /alerts/check | Check & trigger alerts |
 
-## Testing Your Implementation
+## Quick Reference
 
 ```bash
-# Quick test
+# Run tests
 pytest tests/test_price_alerts.py -v
 
-# With coverage
-pytest tests/test_price_alerts.py -v --cov=services.price_alerts --cov=routers.price_alerts
-
-# Run a specific test
+# Run specific test
 pytest tests/test_price_alerts.py::TestCreateAlert::test_create_alert_above -v
+
+# Start server
+python main.py
+
+# API docs
+http://localhost:8000/docs
 ```
 
-Good luck!
+---
+
+Good luck! Ask the AI assistant if you get stuck.
