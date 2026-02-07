@@ -12,7 +12,7 @@ router = APIRouter()
 
 
 class ChaosRequest(BaseModel):
-    scenario: str  # chaos_data, chaos_stress, chaos_race
+    scenario: str
 
 
 class ChaosStatusResponse(BaseModel):
@@ -20,7 +20,24 @@ class ChaosStatusResponse(BaseModel):
     available: list[str]
 
 
-AVAILABLE_SCENARIOS = ["chaos_data", "chaos_stress", "chaos_race"]
+# Original (obvious bugs)
+# - chaos_data: Corrupted prices (negative, zero, overflow)
+# - chaos_stress: High volume (500+ alerts)
+# - chaos_race: Race condition timing
+
+# New (subtle bugs - require investigation)
+# - chaos_boundary: Exact boundary edge cases (>= vs >)
+# - chaos_precision: Float precision issues (0.1 + 0.2 != 0.3)
+# - chaos_inconsistent: Data integrity issues (impossible timestamps, duplicates)
+
+AVAILABLE_SCENARIOS = [
+    "chaos_data",
+    "chaos_stress",
+    "chaos_race",
+    "chaos_boundary",
+    "chaos_precision",
+    "chaos_inconsistent"
+]
 
 
 @router.get("/chaos/status", response_model=ChaosStatusResponse)
