@@ -1129,6 +1129,7 @@ function ChaosPanel() {
   const { sessionId, token, activeChaos, refreshChaos } = useSession()
   const [loading, setLoading] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [isCollapsed, setIsCollapsed] = useState(true)
 
   const activate = async (id: string) => {
     if (loading) return
@@ -1159,34 +1160,103 @@ function ChaosPanel() {
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <div style={{ padding: '12px 16px', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', gap: 8, fontWeight: 500 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', borderBottom: '1px solid var(--border)' }}>
+      <button
+        onClick={() => setIsCollapsed(!isCollapsed)}
+        style={{
+          padding: '10px 16px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+          fontWeight: 500,
+          backgroundColor: 'transparent',
+          border: 'none',
+          cursor: 'pointer',
+          color: 'var(--text-primary)',
+          width: '100%',
+          textAlign: 'left'
+        }}
+      >
+        <span style={{
+          transform: isCollapsed ? 'rotate(-90deg)' : 'rotate(0deg)',
+          transition: 'transform 0.2s',
+          fontSize: 12
+        }}>▼</span>
         <span>🔥</span>
         <span>Chaos Engine</span>
-        {activeChaos && <span style={{ marginLeft: 'auto', backgroundColor: 'var(--danger)', color: 'white', padding: '2px 8px', borderRadius: 10, fontSize: 10, fontWeight: 'bold' }}>ACTIVE</span>}
-      </div>
+        {activeChaos && (
+          <span style={{
+            marginLeft: 'auto',
+            backgroundColor: 'var(--danger)',
+            color: 'white',
+            padding: '2px 8px',
+            borderRadius: 10,
+            fontSize: 10,
+            fontWeight: 'bold'
+          }}>ACTIVE</span>
+        )}
+      </button>
 
-      <div style={{ padding: 12, display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {activeChaos && <div style={{ backgroundColor: 'rgba(244, 67, 54, 0.1)', border: '1px solid rgba(244, 67, 54, 0.3)', padding: '8px 12px', borderRadius: 6, fontSize: 13 }}><strong>Active:</strong> {SCENARIOS.find(s => s.id === activeChaos)?.name}</div>}
+      {!isCollapsed && (
+        <div style={{ padding: '0 12px 12px 12px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {activeChaos && (
+            <div style={{
+              backgroundColor: 'rgba(244, 67, 54, 0.1)',
+              border: '1px solid rgba(244, 67, 54, 0.3)',
+              padding: '6px 10px',
+              borderRadius: 6,
+              fontSize: 12
+            }}>
+              <strong>Active:</strong> {SCENARIOS.find(s => s.id === activeChaos)?.name}
+            </div>
+          )}
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {SCENARIOS.map((s) => (
-            <button key={s.id} onClick={() => activate(s.id)} disabled={loading !== null}
-              style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 12px', backgroundColor: activeChaos === s.id ? 'rgba(244, 67, 54, 0.15)' : 'var(--bg-tertiary)', border: `1px solid ${activeChaos === s.id ? 'var(--danger)' : 'var(--border)'}`, borderRadius: 6, textAlign: 'left', cursor: loading ? 'not-allowed' : 'pointer' }}>
-              <span style={{ fontSize: 18 }}>{s.icon}</span>
-              <span style={{ flex: 1, fontSize: 13 }}>{s.name}</span>
-              {loading === s.id && <span style={{ color: 'var(--text-secondary)' }}>...</span>}
-            </button>
-          ))}
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6 }}>
+            {SCENARIOS.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => activate(s.id)}
+                disabled={loading !== null}
+                title={s.description}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 6,
+                  padding: '6px 8px',
+                  backgroundColor: activeChaos === s.id ? 'rgba(244, 67, 54, 0.15)' : 'var(--bg-tertiary)',
+                  border: `1px solid ${activeChaos === s.id ? 'var(--danger)' : 'var(--border)'}`,
+                  borderRadius: 4,
+                  textAlign: 'left',
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                  fontSize: 11
+                }}
+              >
+                <span style={{ fontSize: 14 }}>{s.icon}</span>
+                <span style={{ flex: 1 }}>{s.name}</span>
+                {loading === s.id && <span style={{ color: 'var(--text-secondary)' }}>...</span>}
+              </button>
+            ))}
+          </div>
+
+          {error && <p style={{ color: 'var(--danger)', fontSize: 11, margin: 0 }}>{error}</p>}
+
+          <button
+            onClick={reset}
+            disabled={loading !== null || !activeChaos}
+            style={{
+              backgroundColor: 'transparent',
+              border: '1px solid var(--border)',
+              color: 'var(--text-secondary)',
+              padding: 6,
+              fontSize: 11,
+              borderRadius: 4,
+              cursor: loading || !activeChaos ? 'not-allowed' : 'pointer'
+            }}
+          >
+            {loading === 'reset' ? 'Resetting...' : '🔄 Reset'}
+          </button>
         </div>
-
-        {error && <p style={{ color: 'var(--danger)', fontSize: 12 }}>{error}</p>}
-
-        <button onClick={reset} disabled={loading !== null || !activeChaos}
-          style={{ backgroundColor: 'transparent', border: '1px solid var(--border)', color: 'var(--text-secondary)', padding: 8, fontSize: 13, cursor: loading || !activeChaos ? 'not-allowed' : 'pointer' }}>
-          {loading === 'reset' ? 'Resetting...' : '🔄 Reset to Clean'}
-        </button>
-      </div>
+      )}
     </div>
   )
 }
