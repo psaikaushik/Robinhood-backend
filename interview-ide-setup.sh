@@ -58,7 +58,9 @@ cat > '.env.example' << 'EOF'
 # Anthropic API Key for Claude chat
 ANTHROPIC_API_KEY=sk-ant-api03-your-key-here
 
-# Optional: Set chaos scenario (default, chaos_data, chaos_stress, chaos_race)
+# Optional: Set chaos scenario
+# Original: chaos_data, chaos_stress, chaos_race
+# Subtle: chaos_boundary, chaos_precision, chaos_inconsistent
 SCENARIO=default
 EOF
 
@@ -485,7 +487,10 @@ class ChaosStatus(BaseModel):
     active: Optional[str]
     available: list[str]
 
-AVAILABLE_SCENARIOS = ["chaos_data", "chaos_stress", "chaos_race"]
+AVAILABLE_SCENARIOS = [
+    "chaos_data", "chaos_stress", "chaos_race",
+    "chaos_boundary", "chaos_precision", "chaos_inconsistent"
+]
 
 @router.get("/{session_id}/status")
 async def get_chaos_status(session_id: str, token: str = Query(...), db: DBSession = Depends(get_db)):
@@ -1110,9 +1115,14 @@ import { useSession } from '../contexts/SessionContext'
 import { api } from '../api/client'
 
 const SCENARIOS = [
-  { id: 'chaos_data', name: 'Corrupt Data', icon: '💾' },
-  { id: 'chaos_stress', name: 'High Volume', icon: '📈' },
-  { id: 'chaos_race', name: 'Race Conditions', icon: '🏃' }
+  // Original (obvious bugs)
+  { id: 'chaos_data', name: 'Corrupt Data', icon: '💾', description: 'Negative/zero prices' },
+  { id: 'chaos_stress', name: 'High Volume', icon: '📈', description: '500+ alerts (N+1 query)' },
+  { id: 'chaos_race', name: 'Race Conditions', icon: '🏃', description: 'Timing delays' },
+  // Subtle bugs (require investigation)
+  { id: 'chaos_boundary', name: 'Boundary Cases', icon: '🎯', description: '>= vs > edge cases' },
+  { id: 'chaos_precision', name: 'Float Precision', icon: '🔬', description: '0.1+0.2 != 0.3' },
+  { id: 'chaos_inconsistent', name: 'Data Issues', icon: '🔀', description: 'Bad timestamps/duplicates' }
 ]
 
 function ChaosPanel() {
